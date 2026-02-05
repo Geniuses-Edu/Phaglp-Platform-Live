@@ -1,4 +1,4 @@
-name: Extract ZIP file v2
+name: Extract ZIP file
 
 on:
   workflow_dispatch: # Allows manual triggering from GitHub UI

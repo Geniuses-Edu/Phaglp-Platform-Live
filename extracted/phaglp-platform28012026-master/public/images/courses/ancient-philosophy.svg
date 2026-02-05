@@ -1,7 +1,0 @@
-<svg width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="225" fill="#f0f9ff"/>
-  <circle cx="200" cy="112.5" r="50" fill="#dbeafe"/>
-  <text x="200" y="112.5" text-anchor="middle" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="16" fill="#1e40af">
-    Ancient Philosophy
-  </text>
-</svg>

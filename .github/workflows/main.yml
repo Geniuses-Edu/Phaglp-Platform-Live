@@ -1,0 +1,29 @@
+name: Extract ZIP file
+
+on:
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  extract-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List files for reference (before extraction)
+        run: ls -lh
+
+      - name: Extract ZIP file
+        run: |
+          unzip phaglp-platform28012026-master.zip -d extracted_zip_files
+          echo "Zip file extracted to ./extracted_zip_files/"
+
+      - name: List extracted files
+        run: ls -lh extracted_zip_files
+
+      # Optional: Upload the extracted files as an artifact
+      - name: Upload extracted files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-zip
+          path: extracted_zip_files/

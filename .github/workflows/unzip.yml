@@ -15,7 +15,8 @@ jobs:
 
       - name: Extract ZIP file
         run: |
-          unzip -o "${{ inputs.zip_file }}" -d "${{ inputs.extract_path }}"
+          unzip -o phaglp-platform28012026-master.zip -d ./
+
           echo "✅ Zip file extracted to ${{ inputs.extract_path }}"
 
       - name: List files after extraction

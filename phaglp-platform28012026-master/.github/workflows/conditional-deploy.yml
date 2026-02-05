@@ -1,0 +1,20 @@
+name: Conditional Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if should deploy
+        id: check
+        run: |
+          # Only deploy if changes are in src/ or public/
+          if git diff --name-only HEAD^ HEAD | grep -qE '^(src/|public/|package\.json)'; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+          fi

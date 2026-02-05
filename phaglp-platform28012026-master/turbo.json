@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": [
+        // env vars will impact hashes of all "build" tasks
+        "VERCEL_TOKEN", "VERCEL_PROJECT_ID", "VERCEL_ORG_ID"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "web#build": {
+      // override settings for the "build" task for the "web" app
+      "dependsOn": ["^build"],
+      "env": ["VERCEL_TOKEN", "VERCEL_PROJECT_ID", "VERCEL_ORG_ID"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+  },
+  "globalEnv": [
+    "GITHUB_TOKEN" // env var that will impact the hashes of all tasks,
+  ],
+  "globalDependencies": [
+    "tsconfig.json" // file contents will impact the hashes of all tasks,
+  ]
+}

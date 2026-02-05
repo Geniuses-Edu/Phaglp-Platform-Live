@@ -1,0 +1,62 @@
+{
+  "id": "typescript-node",
+  "version": "4.0.2",
+  "name": "Node.js & TypeScript",
+  "description": "Develop Node.js based applications in TypeScript. Includes Node.js, eslint, nvm, yarn, and the TypeScript compiler.",
+  "documentationURL": "https://github.com/devcontainers/templates/tree/main/src/typescript-node",
+  "publisher": "Dev Container Spec Maintainers",
+  "licenseURL": "https://github.com/devcontainers/templates/blob/main/LICENSE",
+
+  "options": {
+    "imageVariant": {
+      "type": "string",
+      "description": "Node.js version (use -bookworm, -bullseye variants on local arm64/Apple Silicon):",
+      "proposals": [
+        "22-bookworm",
+        "22-bullseye",
+        "20-bookworm",
+        "18-bookworm",
+        "20-bullseye",
+        "18-bullseye"
+      ],
+      "default": "22-bookworm"
+    }
+  },
+
+  "platforms": ["Node.js", "TypeScript"],
+  "optionalPaths": [".github/*"],
+
+  // 🧩 Recommended secret management practices for Dev Containers:
+  //
+  // 1. Never hardcode secrets or API keys directly in this file.
+  // 2. Use Gitpod or Codespaces Secret Storage for environment variables:
+  //    - Gitpod: https://www.gitpod.io/docs/configure/environment-variables
+  //      Example: gp env NEXTAUTH_SECRET="super-secret-key"
+  //    - Codespaces: https://docs.github.com/en/codespaces/managing-your-codespaces/managing-secrets-for-your-codespaces
+  //
+  // 3. Reference secrets securely in your environment configuration:
+  //    Example (in devcontainer.json):
+  //    "containerEnv": {
+  //       "NEXT_PUBLIC_API_URL": "${localEnv:NEXT_PUBLIC_API_URL}",
+  //       "DATABASE_URL": "${localEnv:DATABASE_URL}"
+  //    }
+  //
+  // 4. For local development, create a `.env.local` file (gitignored):
+  //    NEXTAUTH_SECRET=super-secret-key
+  //    DATABASE_URL=postgres://user:pass@localhost:5432/db
+  //
+  // 5. Do NOT commit `.env`, `.env.local`, or any file containing credentials.
+  //
+  // 6. Optionally, include a `.env.example` file with placeholder values to
+  //    document required variables safely.
+
+  "containerEnv": {
+    // Example secure variable references (will be replaced at runtime)
+    "NEXT_PUBLIC_API_URL": "${localEnv:NEXT_PUBLIC_API_URL}",
+    "DATABASE_URL": "${localEnv:DATABASE_URL}"
+  },
+
+  // 🪶 Tip: You can add postCreateCommand to auto-load secrets from Gitpod
+  // Example:
+  // "postCreateCommand": "gp env | grep -E 'NEXTAUTH|DATABASE' >> .env.local"
+}

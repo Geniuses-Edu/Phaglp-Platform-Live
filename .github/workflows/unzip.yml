@@ -1,7 +1,20 @@
-name: Extract ZIP file
+name: Extract ZIP file v3
 
 on:
-  workflow_dispatch: # Allows manual triggering from GitHub UI
+  workflow_dispatch:
+    inputs:
+      zip_file:
+        description: "Name of the ZIP file to extract"
+        required: true
+        default: "phaglp-platform28012026-master.zip"
+      extract_path:
+        description: "Directory to extract files into"
+        required: true
+        default: "./"
+      upload_artifact:
+        description: "Upload extracted files as artifact?"
+        required: false
+        default: "true"
 
 jobs:
   extract-zip:
@@ -15,8 +28,7 @@ jobs:
 
       - name: Extract ZIP file
         run: |
-          unzip -o phaglp-platform28012026-master.zip -d ./
-
+          unzip -o "${{ inputs.zip_file }}" -d "${{ inputs.extract_path }}"
           echo "✅ Zip file extracted to ${{ inputs.extract_path }}"
 
       - name: List files after extraction

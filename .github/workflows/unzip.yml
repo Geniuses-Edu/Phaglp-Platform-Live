@@ -1,0 +1,29 @@
+name: Extract ZIP file v2
+
+on:
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  extract-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List files before extraction
+        run: ls -lha
+
+      - name: Extract ZIP file
+        run: |
+          unzip -o "${{ inputs.zip_file }}" -d "${{ inputs.extract_path }}"
+          echo "✅ Zip file extracted to ${{ inputs.extract_path }}"
+
+      - name: List files after extraction
+        run: ls -lha ${{ inputs.extract_path }}
+
+      - name: Upload extracted files as artifact
+        if: ${{ inputs.upload_artifact == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-zip
+          path: ${{ inputs.extract_path }}

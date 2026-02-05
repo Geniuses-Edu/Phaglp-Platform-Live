@@ -1,4 +1,4 @@
-name: Extract ZIP file v4
+name: Extract ZIP file and Commit
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
         description: "Directory to extract files into"
         required: true
         default: "./extracted"
-      upload_artifact:
-        description: "Upload extracted files as artifact?"
+      commit_changes:
+        description: "Commit extracted files back to repo?"
         required: false
         default: "true"
 
@@ -22,9 +22,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: List files before extraction
-        run: ls -lha
+        with:
+          persist-credentials: true # needed for pushing changes
 
       - name: Ensure extraction directory exists
         run: mkdir -p "${{ github.event.inputs.extract_path }}"
@@ -34,12 +33,11 @@ jobs:
           unzip -o "${{ github.event.inputs.zip_file }}" -d "${{ github.event.inputs.extract_path }}"
           echo "✅ Zip file extracted to ${{ github.event.inputs.extract_path }}"
 
-      - name: List files after extraction
-        run: ls -lha "${{ github.event.inputs.extract_path }}"
-
-      - name: Upload extracted files as artifact
-        if: ${{ github.event.inputs.upload_artifact == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: extracted-zip
-          path: ${{ github.event.inputs.extract_path }}
+      - name: Commit extracted files to repo
+        if: ${{ github.event.inputs.commit_changes == 'true' }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ${{ github.event.inputs.extract_path }}
+          git commit -m "Add extracted files from ${{ github.event.inputs.zip_file }}"
+          git push
